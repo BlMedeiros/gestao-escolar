@@ -1,10 +1,14 @@
 package com.weg.gestao_escolar.controller;
 
 
-import com.weg.gestao_escolar.dto.AlunoRequisicaoDto;
-import com.weg.gestao_escolar.dto.AlunoRespostaDto;
+import com.weg.gestao_escolar.dto.aluno.AlunoRequisicaoDto;
+import com.weg.gestao_escolar.dto.aluno.AlunoRespostaDto;
+import com.weg.gestao_escolar.dto.nota.NotaRespostaDto;
 import com.weg.gestao_escolar.service.AlunoService;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.SQLException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/alunos")
@@ -18,31 +22,56 @@ public class AlunoController {
 
     @GetMapping
     public List<AlunoRespostaDto> listarAlunos() {
-        return alunoService.listarAlunos();
+        try {
+            return alunoService.listarAlunos();
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("/{id}")
-    public AlunoRespostaDto buscarAlunoPorId(@PathVariable int id) {
-        return alunoService.buscarAlunoPorId(id);
+    public AlunoRespostaDto listarAlunoPorId(@PathVariable int id) {
+        try {
+            return alunoService.listarAlunoPorId(id);
+        }catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @PostMapping
     public AlunoRespostaDto salvarAluno(@RequestBody AlunoRequisicaoDto alunoRequisicaoDto) {
-        return alunoService.salvarAluno(alunoRequisicaoDto);
+        try {
+            return alunoService.salvarAluno(alunoRequisicaoDto);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @PutMapping("/{id}")
     public AlunoRespostaDto atualizarAluno(@PathVariable int id, @RequestBody AlunoRequisicaoDto alunoRequisicaoDto) {
-        return alunoService.atualizarAluno(alunoRequisicaoDto, id);
+        try {
+            return alunoService.atualizarAluno(alunoRequisicaoDto, id);
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 
     @DeleteMapping("/{id}")
     public void deletarAluno(@PathVariable int id) {
-        alunoService.deletarAluno(id);
+     try {
+         alunoService.deletarAluno(id);
+     }catch (SQLException e) {
+            throw new RuntimeException(e);
+     }
     }
 
     @GetMapping("/{id}/notas")
     public List<NotaRespostaDto> listarNotasDoAluno(@PathVariable int id) {
-        return alunoService.listarNotasDoAluno(id);
+        try {
+            return alunoService.listarNotasPorAlunoId(id);
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
