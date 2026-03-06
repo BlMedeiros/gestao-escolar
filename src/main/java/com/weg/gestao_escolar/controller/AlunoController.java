@@ -5,6 +5,7 @@ import com.weg.gestao_escolar.dto.aluno.AlunoRequisicaoDto;
 import com.weg.gestao_escolar.dto.aluno.AlunoRespostaDto;
 import com.weg.gestao_escolar.dto.nota.NotaRespostaDto;
 import com.weg.gestao_escolar.service.AlunoService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -39,7 +40,7 @@ public class AlunoController {
     }
 
     @PostMapping
-    public AlunoRespostaDto salvarAluno(@RequestBody AlunoRequisicaoDto alunoRequisicaoDto) {
+    public AlunoRespostaDto salvarAluno(@Valid @RequestBody AlunoRequisicaoDto alunoRequisicaoDto) {
         try {
             return alunoService.salvarAluno(alunoRequisicaoDto);
         } catch (SQLException e) {
@@ -48,7 +49,7 @@ public class AlunoController {
     }
 
     @PutMapping("/{id}")
-    public AlunoRespostaDto atualizarAluno(@PathVariable int id, @RequestBody AlunoRequisicaoDto alunoRequisicaoDto) {
+    public AlunoRespostaDto atualizarAluno(@PathVariable int id, @Valid @RequestBody AlunoRequisicaoDto alunoRequisicaoDto) {
         try {
             return alunoService.atualizarAluno(alunoRequisicaoDto, id);
         }catch (SQLException e) {

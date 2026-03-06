@@ -4,6 +4,7 @@ import com.weg.gestao_escolar.dto.nota.NotaRequisicaoDto;
 import com.weg.gestao_escolar.dto.nota.NotaRespostaDto;
 import com.weg.gestao_escolar.model.Nota;
 import com.weg.gestao_escolar.service.NotaService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -38,7 +39,7 @@ public class NotaController {
     }
 
     @PostMapping
-    public NotaRespostaDto salvarNota(@RequestBody NotaRequisicaoDto notaRequisicaoDto) {
+    public NotaRespostaDto salvarNota(@Valid @RequestBody NotaRequisicaoDto notaRequisicaoDto) {
         try {
             return notaService.salvarNota(notaRequisicaoDto);
         }catch (SQLException e) {
@@ -47,7 +48,7 @@ public class NotaController {
     }
 
     @PutMapping("/{id}")
-    public NotaRespostaDto atualizarNota(@PathVariable int id, @RequestBody NotaRequisicaoDto notaRequisicaoDto) {
+    public NotaRespostaDto atualizarNota(@PathVariable int id, @Valid @RequestBody NotaRequisicaoDto notaRequisicaoDto) {
         try {
             return notaService.atualizarNota(notaRequisicaoDto, id);
         } catch (SQLException e) {
